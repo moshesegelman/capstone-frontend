@@ -6,7 +6,8 @@
       <router-link to="/signup">Signup</router-link> |
       <router-link to="/login">Login</router-link> |
       <router-link to="/logout">Logout</router-link> |
-      <router-link to="/subjectindex">Subject Index</router-link>
+      <router-link to="/subjectindex">Subject Index</router-link> |
+      <router-link to="/subjectshow">Subject Show</router-link>
     </div>
     <router-view/>
   </div>
