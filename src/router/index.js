@@ -7,6 +7,9 @@ import Login from "../views/Login.vue";
 import Logout from "../views/Logout.vue";
 import SubjectsIndex from "../views/SubjectsIndex.vue";
 import SubjectsShow from "../views/SubjectsShow.vue";
+import ChannelsShow from "../views/ChannelsShow.vue";
+import ChannelsNew from "../views/ChannelsNew.vue";
+import ChannelsEdit from "../views/ChannelsEdit.vue";
 
 Vue.use(VueRouter);
 
@@ -16,8 +19,11 @@ const routes = [
   { path: "/signup", name: "signup", component: Signup },
   { path: "/login", name: "login", component: Login },
   { path: "/logout", name: "logout", component: Logout },
-  { path: "/subjects", name: "subject-index", component: SubjectsIndex },
-  { path: "/subjects/:id", name: "subject-show", component: SubjectsShow }
+  { path: "/subjects", name: "subjects-index", component: SubjectsIndex },
+  { path: "/subjects/:id", name: "subjects-show", component: SubjectsShow },
+  { path: "/channels/new", name: "channels-new", component: ChannelsNew },
+  { path: "/channels/:id", name: "channels-show", component: ChannelsShow },
+  { path: "/channels/:id/edit", name: "channels-edit", component: ChannelsEdit },
 ];
 
 // {

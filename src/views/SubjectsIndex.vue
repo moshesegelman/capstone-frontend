@@ -1,5 +1,8 @@
 <template>
-  <div class="subject-index">
+  <div class="subjects-index">
+    <ul>
+      <li v-for="error in errors">{{ error }}</li>
+    </ul>
     <h1>{{ message }}</h1>
     <div v-for="subject in subjects">
       <h1>Subejct: {{ subject.name }}</h1>
@@ -23,13 +26,21 @@ export default {
     return {
       message: "Welcome to Subject Index",
       subjects: [],
+      errors: [],
     };
   },
   created: function () {
-    axios.get("/api/subjects").then((response) => {
-      this.subjects = response.data;
-      console.log(this.subjects);
-    });
+    axios
+      .get("/api/subjects")
+      .then((response) => {
+        localStorage.removeItem("subjectId");
+        this.subjects = response.data;
+        console.log(this.subjects);
+      })
+      .catch((error) => {
+        console.log(error.response.data.errors);
+        this.errors = error.response.data.errors;
+      });
   },
   methods: {},
 };
