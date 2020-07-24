@@ -16,8 +16,8 @@ const routes = [
   { path: "/signup", name: "signup", component: Signup },
   { path: "/login", name: "login", component: Login },
   { path: "/logout", name: "logout", component: Logout },
-  { path: "/subjectindex", name: "subject-index", component: SubjectsIndex },
-  { path: "/subjectshow", name: "subject-show", component: SubjectsShow }
+  { path: "/subjects", name: "subject-index", component: SubjectsIndex },
+  { path: "/subjects/:id", name: "subject-show", component: SubjectsShow }
 ];
 
 // {

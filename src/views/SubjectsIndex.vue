@@ -3,7 +3,8 @@
     <h1>{{ message }}</h1>
     <div v-for="subject in subjects">
       <h1>Subejct: {{ subject.name }}</h1>
-      <img :src="subject.image_url" >
+      <img :src="subject.image_url" > <br>
+      <router-link :to="`/subjects/${subject.id}`">click</router-link>
     </div>
   </div>
 </template>
@@ -18,18 +19,18 @@ img {
 <script>
 import axios from "axios";
 export default {
-  data: function() {
+  data: function () {
     return {
       message: "Welcome to Subject Index",
-      subjects: []
+      subjects: [],
     };
   },
-  created: function() {
-    axios.get("/api/subjects").then(response => {
+  created: function () {
+    axios.get("/api/subjects").then((response) => {
       this.subjects = response.data;
       console.log(this.subjects);
     });
   },
-  methods: {}
+  methods: {},
 };
 </script>
