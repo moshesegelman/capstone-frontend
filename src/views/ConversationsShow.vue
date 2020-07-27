@@ -1,6 +1,9 @@
 <template>
   <div class="conversations-show">
-    <h1>{{ message }}</h1>
+    <h1>{{ conversation.partner.username }}</h1>
+    <div v-for="message in messages">
+      <h3>{{message.creator}}: {{message.text}}</h3>
+    </div>
   </div>
 </template>
 
@@ -8,13 +11,20 @@
 </style>
 
 <script>
+import axios from "axios";
 export default {
   data: function () {
     return {
-      message: "Welcome to Vue.js!",
+      conversation: {},
+      messages: [],
     };
   },
-  created: function () {},
+  created: function () {
+    axios.get(`api/conversations/${this.$route.params.id}`).then((response) => {
+      this.conversation = response.data;
+      this.messages = this.conversation.messages;
+    });
+  },
   methods: {},
 };
 </script>
