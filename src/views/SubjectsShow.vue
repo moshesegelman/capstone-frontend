@@ -3,7 +3,6 @@
     <ul>
       <li v-for="error in errors">{{ error }}</li>
     </ul>
-    <h1>{{ message }}</h1>
     <div v-for="channel in channels">
       <h1>Name: {{ channel.name }}</h1>
       <h2>Details: {{ channel.details }}</h2>
@@ -20,7 +19,6 @@ import axios from "axios";
 export default {
   data: function () {
     return {
-      message: "Welcome to Subject Show!",
       subject: {},
       channels: [],
       errors: [],

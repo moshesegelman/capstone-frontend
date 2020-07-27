@@ -6,13 +6,14 @@
     <div v-for="message in messages">
         <h3>{{message.creator}}: {{ message.text }}</h3>
     </div>
+    <div v-if="$parent.isLoggedIn()">
+      Message: <input type="text" v-model="text"> 
+      <button v-on:click="createMessage()">Send</button>
+    </div>
     <div v-if="isCurrentUser()">
       <router-link :to="`/channels/${channel.id}/edit`">Edit Channel</router-link> |
       <button class="btn btn-primary" v-on:click="destroyChannel()">Delete</button>
     </div>
-    
-    <p>{{channel.user_id}}</p>
-    
   </div>
 </template>
 
@@ -26,6 +27,7 @@ export default {
     return {
       channel: {},
       messages: {},
+      text: "",
     };
   },
   created: function () {
@@ -42,7 +44,7 @@ export default {
       return localStorage.getItem("userId") == this.channel.user_id;
     },
     destroyChannel: function () {
-      if (confirm("Are you sure you want to delete this recipe?")) {
+      if (confirm("Are you sure you want to delete this channel?")) {
         axios.delete(`/api/channels/${this.channel.id}`).then((response) => {
           console.log("Successfully destroyed", response.data);
           this.$router.push(
@@ -50,6 +52,16 @@ export default {
           );
         });
       }
+    },
+    createMessage: function () {
+      var messageData = {
+        text: this.text,
+        channel_id: this.channel.id,
+        user_id: localStorage.getItem("userId"),
+      };
+      axios.post("/api/messages", messageData).then((response) => {
+        this.$router.push(`/channels/${response.data.channel.id}`);
+      });
     },
   },
 };

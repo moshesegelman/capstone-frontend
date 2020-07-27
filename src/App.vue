@@ -13,7 +13,9 @@
           <router-link to="/users/:id">users show</router-link> 
        </div>
     </div>
-    <router-view/>
+    <div class="container">
+      <router-view/>
+    </div>
   </div>
 </template>
 
