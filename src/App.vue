@@ -3,14 +3,15 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
-      <router-link to="/signup">Signup</router-link> |
-      <router-link to="/login">Login</router-link> |
-      <router-link to="/logout">Logout</router-link> |
-      <router-link to="/subjects">Subject Index</router-link> |
-      <router-link to="/subjects/:id">Subject show</router-link> |
-      <router-link to="/channels/:id">channel show</router-link> |
-      <router-link to="/channels/new">channel create</router-link> |
-      <router-link to="/channels/:id/edit">channel edit</router-link> |
+      <div v-if="!isLoggedIn()">
+        <router-link to="/signup">Signup</router-link> |
+        <router-link to="/login">Login</router-link>
+      </div>
+       <div v-if="isLoggedIn()">
+          <router-link to="/logout">Logout</router-link> |
+          <router-link to="/subjects">Subject Index</router-link> |
+          <router-link to="/users/:id">users show</router-link> 
+       </div>
     </div>
     <router-view/>
   </div>

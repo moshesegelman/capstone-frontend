@@ -10,6 +10,7 @@ import SubjectsShow from "../views/SubjectsShow.vue";
 import ChannelsShow from "../views/ChannelsShow.vue";
 import ChannelsNew from "../views/ChannelsNew.vue";
 import ChannelsEdit from "../views/ChannelsEdit.vue";
+import UsersShow from "../views/UsersShow.vue";
 
 Vue.use(VueRouter);
 
@@ -24,6 +25,7 @@ const routes = [
   { path: "/channels/new", name: "channels-new", component: ChannelsNew },
   { path: "/channels/:id", name: "channels-show", component: ChannelsShow },
   { path: "/channels/:id/edit", name: "channels-edit", component: ChannelsEdit },
+  { path: "/users/:id", name: "users-show", component: UsersShow },
 ];
 
 // {
