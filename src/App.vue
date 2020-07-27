@@ -10,7 +10,7 @@
        <div v-if="isLoggedIn()">
           <router-link to="/logout">Logout</router-link> |
           <router-link to="/subjects">Subject Index</router-link> |
-          <router-link to="/users/:id">users show</router-link> 
+          <router-link :to="`/users/${userId}`">users show</router-link> 
        </div>
     </div>
     <div class="container">
@@ -47,6 +47,7 @@ export default {
   data: function () {
     return {
       flashMessage: "",
+      userId: localStorage.getItem("userId"),
     };
   },
   methods: {

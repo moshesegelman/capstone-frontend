@@ -60,7 +60,7 @@ export default {
         user_id: localStorage.getItem("userId"),
       };
       axios.post("/api/messages", messageData).then((response) => {
-        this.$router.push(`/channels/${response.data.channel.id}`);
+        this.$router.push(`/channels/${response.data.channel_id}`);
       });
     },
   },

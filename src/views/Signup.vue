@@ -38,7 +38,7 @@
 import axios from "axios";
 
 export default {
-  data: function() {
+  data: function () {
     return {
       firstName: "",
       lastName: "",
@@ -46,28 +46,28 @@ export default {
       email: "",
       password: "",
       passwordConfirmation: "",
-      errors: []
+      errors: [],
     };
   },
   methods: {
-    submit: function() {
+    submit: function () {
       var params = {
         first_name: this.firstName,
         last_name: this.lastName,
         username: this.userName,
         email: this.email,
         password: this.password,
-        password_confirmation: this.passwordConfirmation
+        password_confirmation: this.passwordConfirmation,
       };
       axios
         .post("/api/users", params)
-        .then(response => {
-          this.$router.push("/home");
+        .then((response) => {
+          this.$router.push("/login");
         })
-        .catch(error => {
+        .catch((error) => {
           this.errors = error.response.data.errors;
         });
-    }
-  }
+    },
+  },
 };
 </script>

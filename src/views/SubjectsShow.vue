@@ -21,6 +21,8 @@ export default {
     return {
       subject: {},
       channels: [],
+      name: "",
+      details: "",
       errors: [],
     };
   },
@@ -39,6 +41,22 @@ export default {
         this.errors = error.response.data.errors;
       });
   },
-  methods: {},
+  methods: {
+    createChannel: function () {
+      var channelData = {
+        name: this.name,
+        details: this.details,
+        subject_id: localStorage.getItem("subjectId"),
+      };
+      axios
+        .post("api/channels", channelData)
+        .then((response) => {
+          this.$router.push(`/channels/${response.data.id}`);
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+        });
+    },
+  },
 };
 </script>
