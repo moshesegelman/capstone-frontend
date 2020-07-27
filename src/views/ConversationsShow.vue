@@ -1,8 +1,11 @@
 <template>
   <div class="conversations-show">
-    <h1>{{ conversation.partner.username }}</h1>
+    <h1>@{{ conversation.partner.username }}</h1>
     <div v-for="message in messages">
       <h3>{{message.creator}}: {{message.text}}</h3>
+        <div v-if="isMessageUser(message)">
+          <button class="btn btn-primary" v-on:click="destroyMessage(message)">Delete</button>
+        </div>  
     </div>
   </div>
 </template>
@@ -25,6 +28,19 @@ export default {
       this.messages = this.conversation.messages;
     });
   },
-  methods: {},
+  methods: {
+    isMessageUser: function (message) {
+      // eslint-disable-next-line eqeqeq
+      return localStorage.getItem("userId") == message.user_id;
+    },
+  },
+  destroyMessage: function (message) {
+    if (confirm("Are you sure you want to delete this Message?")) {
+      axios.delete(`/api/message/${message.id}`).then((response) => {
+        console.log("Successfully destroyed", response.data);
+        this.$router.push(`/api/channels/${this.channel.id}`);
+      });
+    }
+  },
 };
 </script>
