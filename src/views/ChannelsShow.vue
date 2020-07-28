@@ -74,13 +74,13 @@ export default {
       var messageData = {
         text: this.text,
         channel_id: this.channel.id,
-        user_id: localStorage.getItem("userId"),
       };
       axios
         .post("/api/messages", messageData)
         .then((response) => {
           console.log(response.data);
           this.messages.push(response.data);
+          this.text = "";
         })
         .catch((error) => {
           this.errors = error.response.data.errors;

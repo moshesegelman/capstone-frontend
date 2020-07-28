@@ -7,10 +7,8 @@
           <button class="btn btn-primary" v-on:click="destroyMessage(message)">Delete</button>
         </div>  
     </div>
-    <div v-if="$parent.isLoggedIn()">
-      Message: <input type="text" v-model="text"> 
-      <button v-on:click="createMessage()">Send</button>
-    </div>
+    Message: <input type="text" v-model="text"> 
+    <button v-on:click="createMessage()">Send</button>
   </div>
 </template>
 
@@ -41,36 +39,37 @@ export default {
       // eslint-disable-next-line eqeqeq
       return localStorage.getItem("userId") == message.user_id;
     },
-  },
-  destroyMessage: function (message) {
-    if (confirm("Are you sure you want to delete this Message?")) {
+    destroyMessage: function (message) {
+      if (confirm("Are you sure you want to delete this Message?")) {
+        axios
+          .delete(`/api/messages/${message.id}`)
+          .then((response) => {
+            console.log("Successfully destroyed", response.data);
+            var index = this.messages.indexOf(message);
+            this.messages.splice(index, 1);
+          })
+          .catch((error) => {
+            console.log(error.response.data.errors);
+            this.errors = error.response.data.errors;
+          });
+      }
+    },
+    createMessage: function () {
+      var messageData = {
+        text: this.text,
+        conversation_id: this.conversation.id,
+      };
       axios
-        .delete(`/api/message/${message.id}`)
+        .post("/api/messages", messageData)
         .then((response) => {
-          console.log("Successfully destroyed", response.data);
-          this.$router.push(`/api/channels/${this.channel.id}`);
+          this.messages.push(response.data);
+          this.text = "";
         })
         .catch((error) => {
           console.log(error.response.data.errors);
           this.errors = error.response.data.errors;
         });
-    }
-  },
-  createMessage: function () {
-    var messageData = {
-      text: this.text,
-      conversation_id: this.conversation.id,
-      user_id: localStorage.getItem("userId"),
-    };
-    axios
-      .post("/api/messages", messageData)
-      .then((response) => {
-        this.$router.push(`/conversations/${this.conversation.id}`);
-      })
-      .catch((error) => {
-        console.log(error.response.data.errors);
-        this.errors = error.response.data.errors;
-      });
+    },
   },
 };
 </script>
