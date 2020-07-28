@@ -3,12 +3,15 @@
     <ul>
       <li v-for="error in errors">{{ error }}</li>
     </ul>
+    <div class="form-group">
+      <input class="form-control" v-model="nameFilter" list="titles" type="text" placeholder="Search">
+    </div>
+    <datalist id="titles">
+      <option v-for="channel in channels">{{channel.name }}</option>
+    </datalist>
     <router-link to="/channels/new">Create a Channel</router-link>
     <form v-on:submit.prevent="createChannel()">
       <h1>New Channel</h1>
-      <ul>
-        <li class="text-danger" v-for="error in errors">{{ error }}</li>
-      </ul>
       <div class="form-group">
         <label>Name:</label>
         <input type="text" class="form-control" v-model="name" />
@@ -40,6 +43,7 @@ export default {
       name: "",
       details: "",
       errors: [],
+      nameFilter: "",
     };
   },
   created: function () {

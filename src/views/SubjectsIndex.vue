@@ -3,6 +3,12 @@
     <ul>
       <li v-for="error in errors">{{ error }}</li>
     </ul>
+    <div class="form-group">
+      <input class="form-control" v-model="nameFilter" list="titles" type="text" placeholder="Search">
+    </div>
+    <datalist id="titles">
+      <option v-for="subject in subjects">{{subject.name }}</option>
+    </datalist>
     <h1>{{ message }}</h1>
     <div v-for="subject in subjects">
       <h1>Subejct: {{ subject.name }}</h1>
@@ -27,6 +33,7 @@ export default {
       message: "Welcome to Subject Index",
       subjects: [],
       errors: [],
+      nameFilter: "",
     };
   },
   created: function () {
