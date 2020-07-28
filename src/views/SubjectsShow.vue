@@ -3,6 +3,7 @@
     <ul>
       <li v-for="error in errors">{{ error }}</li>
     </ul>
+    <router-link to="/channels/new">Create a Channel</router-link>
     <div v-for="channel in channels">
       <h1>Name: {{ channel.name }}</h1>
       <h2>Details: {{ channel.details }}</h2>
@@ -51,7 +52,7 @@ export default {
       axios
         .post("api/channels", channelData)
         .then((response) => {
-          this.$router.push(`/channels/${response.data.id}`);
+          this.channels.push(response.data);
         })
         .catch((error) => {
           this.errors = error.response.data.errors;

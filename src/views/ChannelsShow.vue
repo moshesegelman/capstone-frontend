@@ -4,20 +4,18 @@
     <h2> Creator: {{ channel.creator }}</h2>
     Messages
     <div v-for="message in messages">
-      <button class="btn btn-primary" v-on:click="createConversation(message)">Meesage</button>
-        <h3>{{message.creator}}: {{ message.text }} 
-        <div v-if="isMessageUser(message)">
-          <button class="btn btn-primary" v-on:click="destroyMessage(message)">Delete</button>
-        </div>  
-        </h3>
+      <div v-if="!isMessageUser(message)">
+        <button class="btn btn-primary" v-on:click="createConversation(message)">Meesage</button>
+      </div>
+      <h3>{{ message.creator}}: {{ message.text }} 
+      <div v-if="isMessageUser(message)">
+        <button class="btn btn-primary" v-on:click="destroyMessage(message)">Delete</button>
+      </div>  
+     </h3>
     </div>
     <div v-if="$parent.isLoggedIn()">
       Message: <input type="text" v-model="text"> 
       <button v-on:click="createMessage()">Send</button>
-    </div>
-    <div v-if="isChannelUser()">
-      <router-link :to="`/channels/${channel.id}/edit`">Edit Channel</router-link> |
-      <button class="btn btn-primary" v-on:click="destroyChannel()">Delete</button>
     </div>
   </div>
 </template>
@@ -31,7 +29,7 @@ export default {
   data: function () {
     return {
       channel: {},
-      messages: {},
+      messages: [],
       text: "",
       subjectId: localStorage.getItem("subjectId"),
     };
@@ -42,6 +40,7 @@ export default {
       this.channel = response.data;
       this.messages = this.channel.messages;
       console.log(response.data);
+      console.log(this.messages);
     });
   },
   methods: {
@@ -53,21 +52,12 @@ export default {
       // eslint-disable-next-line eqeqeq
       return localStorage.getItem("userId") == message.user_id;
     },
-    destroyChannel: function () {
-      if (confirm("Are you sure you want to delete this channel?")) {
-        axios.delete(`/api/channels/${this.channel.id}`).then((response) => {
-          console.log("Successfully destroyed", response.data);
-          this.$router.push(
-            `/api/subjects/${localStorage.getItem("subjectId")}`
-          );
-        });
-      }
-    },
     destroyMessage: function (message) {
       if (confirm("Are you sure you want to delete this Message?")) {
-        axios.delete(`/api/message/${message.id}`).then((response) => {
+        axios.delete(`/api/messages/${message.id}`).then((response) => {
           console.log("Successfully destroyed", response.data);
-          this.$router.push(`/api/channels/${this.channel.id}`);
+          var index = this.messages.indexOf(message);
+          this.messages.splice(index, 1);
         });
       }
     },
@@ -78,7 +68,8 @@ export default {
         user_id: localStorage.getItem("userId"),
       };
       axios.post("/api/messages", messageData).then((response) => {
-        this.$router.push(`/subjects/${this.subjectId}`);
+        console.log(response.data);
+        this.messages.push(response.data);
       });
     },
     createConversation: function (message) {
@@ -86,7 +77,7 @@ export default {
         sender_id: localStorage.getItem("userId"),
         recipient_id: message.user_id,
       };
-      axios.post("/api/conversation", conversationData).then((response) => {
+      axios.post("/api/conversations", conversationData).then((response) => {
         this.$router.push(`/conversations/${response.data.id}`);
       });
     },

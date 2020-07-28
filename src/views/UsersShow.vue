@@ -5,6 +5,8 @@
     Channels
     <div v-for="channel in channels">
       <h3>{{channel.name}}</h3>
+      <router-link :to="`/channels/${channel.id}/edit`">Edit Channel</router-link> |
+      <button class="btn btn-primary" v-on:click="destroyChannel(channel)">Delete Channel</button>
     </div>
   </div>
 </template>
@@ -19,7 +21,7 @@ export default {
     return {
       message: "Welcome to User Show",
       user: {},
-      channels: {},
+      channels: [],
       userId: localStorage.getItem("userId"),
     };
   },
@@ -29,6 +31,16 @@ export default {
       this.channels = this.user.channels;
     });
   },
-  methods: {},
+  methods: {
+    destroyChannel: function (channel) {
+      if (confirm("Are you sure you want to delete this channel?")) {
+        axios.delete(`/api/channels/${channel.id}`).then((response) => {
+          console.log("Successfully destroyed", response.data);
+          var index = this.channels.indexOf(channel);
+          this.channels.splice(index, 1);
+        });
+      }
+    },
+  },
 };
 </script>

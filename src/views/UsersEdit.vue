@@ -64,10 +64,16 @@ export default {
     },
     destroyUser: function () {
       if (confirm("Are you sure you want to delete your account?")) {
-        axios.delete(`/api/users/${this.user.id}`).then((response) => {
-          console.log("Successfully destroyed", response.data);
-          this.$router.push("/signup");
-        });
+        axios
+          .delete(`/api/users/${this.user.id}`)
+          .then((response) => {
+            console.log("Successfully destroyed", response.data);
+            this.$router.push("/signup");
+          })
+          .catch((error) => {
+            console.log(error.response.data.errors);
+            this.errors = error.response.data.errors;
+          });
       }
     },
   },

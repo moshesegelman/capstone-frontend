@@ -1,11 +1,15 @@
 <template>
   <div class="conversations-show">
-    <h1>@{{ conversation.partner.username }}</h1>
+    <h1>{{ conversation.partner.username }}</h1>
     <div v-for="message in messages">
       <h3>{{message.creator}}: {{message.text}}</h3>
         <div v-if="isMessageUser(message)">
           <button class="btn btn-primary" v-on:click="destroyMessage(message)">Delete</button>
         </div>  
+    </div>
+    <div v-if="$parent.isLoggedIn()">
+      Message: <input type="text" v-model="text"> 
+      <button v-on:click="createMessage()">Send</button>
     </div>
   </div>
 </template>
@@ -20,6 +24,7 @@ export default {
     return {
       conversation: {},
       messages: [],
+      text: "",
     };
   },
   created: function () {
@@ -41,6 +46,16 @@ export default {
         this.$router.push(`/api/channels/${this.channel.id}`);
       });
     }
+  },
+  createMessage: function () {
+    var messageData = {
+      text: this.text,
+      conversation_id: this.conversation.id,
+      user_id: localStorage.getItem("userId"),
+    };
+    axios.post("/api/messages", messageData).then((response) => {
+      this.$router.push(`/conversations/${this.conversation.id}`);
+    });
   },
 };
 </script>
