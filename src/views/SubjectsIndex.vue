@@ -10,7 +10,7 @@
       <option v-for="subject in subjects">{{subject.name }}</option>
     </datalist>
     <h1>{{ message }}</h1>
-    <div v-for="subject in subjects">
+    <div v-for="subject in orderBy(filterBy(subjects, nameFilter), sortAttribute)" v-bind:key="subject.id">
       <h1>Subejct: {{ subject.name }}</h1>
       <img :src="subject.image_url" > <br>
       <router-link :to="`/subjects/${subject.id}`">click</router-link>
@@ -27,13 +27,16 @@ img {
 
 <script>
 import axios from "axios";
+import Vue2Filters from "vue2-filters";
 export default {
+  mixins: [Vue2Filters.mixin],
   data: function () {
     return {
       message: "Welcome to Subject Index",
       subjects: [],
       errors: [],
       nameFilter: "",
+      sortAttribute: "name",
     };
   },
   created: function () {

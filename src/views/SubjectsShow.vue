@@ -7,7 +7,7 @@
       <input class="form-control" v-model="nameFilter" list="titles" type="text" placeholder="Search">
     </div>
     <datalist id="titles">
-      <option v-for="channel in channels">{{channel.name }}</option>
+      <option v-for="channel in channels">{{ channel.name }}</option>
     </datalist>
     <router-link to="/channels/new">Create a Channel</router-link>
     <form v-on:submit.prevent="createChannel()">
@@ -22,7 +22,7 @@
       </div>
       <input type="submit" class="btn btn-primary" value="Create"/>
     </form>
-    <div v-for="channel in channels">
+    <div v-for="channel in filterBy(channels, nameFilter)" v-bind:key="channel.id">
       <h1>Name: {{ channel.name }}</h1>
       <h2>Details: {{ channel.details }}</h2>
       <router-link :to="`/channels/${channel.id}`">Click</router-link>
@@ -31,11 +31,13 @@
 </template>
 
 <style>
-</style>
+</style>  
 
 <script>
 import axios from "axios";
+import Vue2Filters from "vue2-filters";
 export default {
+  mixins: [Vue2Filters.mixin],
   data: function () {
     return {
       subject: {},
