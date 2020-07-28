@@ -4,6 +4,21 @@
       <li v-for="error in errors">{{ error }}</li>
     </ul>
     <router-link to="/channels/new">Create a Channel</router-link>
+    <form v-on:submit.prevent="createChannel()">
+      <h1>New Channel</h1>
+      <ul>
+        <li class="text-danger" v-for="error in errors">{{ error }}</li>
+      </ul>
+      <div class="form-group">
+        <label>Name:</label>
+        <input type="text" class="form-control" v-model="name" />
+      </div>
+      <div class="form-group">
+        <label>Details:</label>
+        <input type="text" class="form-control" v-model="details" />
+      </div>
+      <input type="submit" class="btn btn-primary" value="Create"/>
+    </form>
     <div v-for="channel in channels">
       <h1>Name: {{ channel.name }}</h1>
       <h2>Details: {{ channel.details }}</h2>
@@ -47,7 +62,7 @@ export default {
       var channelData = {
         name: this.name,
         details: this.details,
-        subject_id: localStorage.getItem("subjectId"),
+        subject_id: this.subject.id,
       };
       axios
         .post("api/channels", channelData)

@@ -20,7 +20,6 @@ export default {
   created: function () {
     axios.get("api/conversations").then((response) => {
       this.conversations = response.data;
-      console.log(this.conversations[1].messages);
     });
   },
   methods: {},

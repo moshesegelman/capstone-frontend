@@ -1,5 +1,8 @@
 <template>
   <div class="channel-show">
+    <ul>
+      <li v-for="error in errors">{{ error }}</li>
+    </ul>
     <h1>Channel: {{ channel.name }}</h1>
     <h2> Creator: {{ channel.creator }}</h2>
     Messages
@@ -28,6 +31,7 @@ import axios from "axios";
 export default {
   data: function () {
     return {
+      errors: [],
       channel: {},
       messages: [],
       text: "",
@@ -54,11 +58,16 @@ export default {
     },
     destroyMessage: function (message) {
       if (confirm("Are you sure you want to delete this Message?")) {
-        axios.delete(`/api/messages/${message.id}`).then((response) => {
-          console.log("Successfully destroyed", response.data);
-          var index = this.messages.indexOf(message);
-          this.messages.splice(index, 1);
-        });
+        axios
+          .delete(`/api/messages/${message.id}`)
+          .then((response) => {
+            console.log("Successfully destroyed", response.data);
+            var index = this.messages.indexOf(message);
+            this.messages.splice(index, 1);
+          })
+          .catch((error) => {
+            this.errors = error.response.data.errors;
+          });
       }
     },
     createMessage: function () {
@@ -67,19 +76,29 @@ export default {
         channel_id: this.channel.id,
         user_id: localStorage.getItem("userId"),
       };
-      axios.post("/api/messages", messageData).then((response) => {
-        console.log(response.data);
-        this.messages.push(response.data);
-      });
+      axios
+        .post("/api/messages", messageData)
+        .then((response) => {
+          console.log(response.data);
+          this.messages.push(response.data);
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+        });
     },
     createConversation: function (message) {
       var conversationData = {
-        sender_id: localStorage.getItem("userId"),
         recipient_id: message.user_id,
       };
-      axios.post("/api/conversations", conversationData).then((response) => {
-        this.$router.push(`/conversations/${response.data.id}`);
-      });
+      axios
+        .post("/api/conversations", conversationData)
+        .then((response) => {
+          console.log(response.data);
+          this.$router.push(`/conversations/${response.data.id}`);
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+        });
     },
   },
 };

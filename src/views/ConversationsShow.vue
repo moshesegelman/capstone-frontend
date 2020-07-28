@@ -1,6 +1,6 @@
 <template>
   <div class="conversations-show">
-    <h1>{{ conversation.partner.username }}</h1>
+    <h1>{{ partner.username }}</h1>
     <div v-for="message in messages">
       <h3>{{message.creator}}: {{message.text}}</h3>
         <div v-if="isMessageUser(message)">
@@ -23,6 +23,7 @@ export default {
   data: function () {
     return {
       conversation: {},
+      partner: {},
       messages: [],
       text: "",
     };
@@ -31,6 +32,7 @@ export default {
     axios.get(`api/conversations/${this.$route.params.id}`).then((response) => {
       this.conversation = response.data;
       this.messages = this.conversation.messages;
+      this.partner = this.conversation.partner;
     });
   },
   methods: {
