@@ -19,7 +19,7 @@ import axios from "axios";
 export default {
   data: function () {
     return {
-      message: "Welcome to User Show",
+      eroors: [],
       user: {},
       channels: [],
       userId: localStorage.getItem("userId"),
@@ -34,11 +34,17 @@ export default {
   methods: {
     destroyChannel: function (channel) {
       if (confirm("Are you sure you want to delete this channel?")) {
-        axios.delete(`/api/channels/${channel.id}`).then((response) => {
-          console.log("Successfully destroyed", response.data);
-          var index = this.channels.indexOf(channel);
-          this.channels.splice(index, 1);
-        });
+        axios
+          .delete(`/api/channels/${channel.id}`)
+          .then((response) => {
+            console.log("Successfully destroyed", response.data);
+            var index = this.channels.indexOf(channel);
+            this.channels.splice(index, 1);
+          })
+          .catch((error) => {
+            console.log(error.response.data.errors);
+            this.errors = error.response.data.errors;
+          });
       }
     },
   },

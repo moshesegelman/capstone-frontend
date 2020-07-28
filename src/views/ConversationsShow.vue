@@ -22,6 +22,7 @@ import axios from "axios";
 export default {
   data: function () {
     return {
+      errors: [],
       conversation: {},
       partner: {},
       messages: [],
@@ -43,10 +44,16 @@ export default {
   },
   destroyMessage: function (message) {
     if (confirm("Are you sure you want to delete this Message?")) {
-      axios.delete(`/api/message/${message.id}`).then((response) => {
-        console.log("Successfully destroyed", response.data);
-        this.$router.push(`/api/channels/${this.channel.id}`);
-      });
+      axios
+        .delete(`/api/message/${message.id}`)
+        .then((response) => {
+          console.log("Successfully destroyed", response.data);
+          this.$router.push(`/api/channels/${this.channel.id}`);
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+          this.errors = error.response.data.errors;
+        });
     }
   },
   createMessage: function () {
@@ -55,9 +62,15 @@ export default {
       conversation_id: this.conversation.id,
       user_id: localStorage.getItem("userId"),
     };
-    axios.post("/api/messages", messageData).then((response) => {
-      this.$router.push(`/conversations/${this.conversation.id}`);
-    });
+    axios
+      .post("/api/messages", messageData)
+      .then((response) => {
+        this.$router.push(`/conversations/${this.conversation.id}`);
+      })
+      .catch((error) => {
+        console.log(error.response.data.errors);
+        this.errors = error.response.data.errors;
+      });
   },
 };
 </script>
