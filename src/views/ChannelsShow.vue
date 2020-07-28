@@ -8,7 +8,7 @@
     Messages
     <div v-for="message in messages">
       <div v-if="!isMessageUser(message)">
-        <button class="btn btn-primary" v-on:click="createConversation(message)">Meesage</button>
+        <button class="btn btn-primary" v-on:click="createConversation(message)">Message</button>
       </div>
       <h3>{{ message.creator}}: {{ message.text }} 
       <div v-if="isMessageUser(message)">

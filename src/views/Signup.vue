@@ -14,7 +14,7 @@
         <input type="text" class="form-control" v-model="lastName">
       </div>
       <div class="form-group">
-        <label>Userame:</label> 
+        <label>Username:</label> 
         <input type="text" class="form-control" v-model="userName">
       </div>
       <div class="form-group">

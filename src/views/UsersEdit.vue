@@ -68,7 +68,10 @@ export default {
           .delete(`/api/users/${this.user.id}`)
           .then((response) => {
             console.log("Successfully destroyed", response.data);
+            delete axios.defaults.headers.common["Authorization"];
+            localStorage.removeItem("jwt");
             this.$router.push("/signup");
+            // this.$router.push("/signup");
           })
           .catch((error) => {
             console.log(error.response.data.errors);
