@@ -28,6 +28,7 @@
 
 <script>
 import axios from "axios";
+import ActionCable from "actioncable";
 export default {
   data: function () {
     return {
@@ -45,6 +46,21 @@ export default {
       this.messages = this.channel.messages;
       console.log(response.data);
       console.log(this.messages);
+    });
+    var cable = ActionCable.createConsumer("ws://localhost:3000/cable");
+    cable.subscriptions.create("MessagesChannel", {
+      connected: () => {
+        // Called when the subscription is ready for use on the server
+        console.log("Connected to MessagesChannel");
+      },
+      disconnected: () => {
+        // Called when the subscription has been terminated by the server
+      },
+      received: (data) => {
+        // Called when there's incoming data on the websocket for this channel
+        console.log("Data from MessagesChannel:", data);
+        this.messages.unshift(data); // update the messages in real time
+      },
     });
   },
   methods: {
@@ -79,7 +95,7 @@ export default {
         .post("/api/messages", messageData)
         .then((response) => {
           console.log(response.data);
-          this.messages.push(response.data);
+          // this.messages.push(response.data);
           this.text = "";
         })
         .catch((error) => {
