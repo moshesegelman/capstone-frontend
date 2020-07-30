@@ -36,6 +36,7 @@
 <script>
 import axios from "axios";
 import Vue2Filters from "vue2-filters";
+import ActionCable from "actioncable";
 export default {
   mixins: [Vue2Filters.mixin],
   data: function () {
@@ -62,6 +63,21 @@ export default {
         console.log(error.response.data.errors);
         this.errors = error.response.data.errors;
       });
+    var cable = ActionCable.createConsumer("ws://localhost:3000/cable");
+    cable.subscriptions.create("ChannelsChannel", {
+      connected: () => {
+        // Called when the subscription is ready for use on the server
+        console.log("Connected to ChannelsChannel");
+      },
+      disconnected: () => {
+        // Called when the subscription has been terminated by the server
+      },
+      received: (data) => {
+        // Called when there's incoming data on the websocket for this channel
+        console.log("Data from ChannelsChannel:", data);
+        this.channels.push(data); // update the messages in real time
+      },
+    });
   },
   methods: {
     createChannel: function () {
@@ -73,7 +89,7 @@ export default {
       axios
         .post("api/channels", channelData)
         .then((response) => {
-          this.channels.push(response.data);
+          // this.channels.push(response.data);
         })
         .catch((error) => {
           this.errors = error.response.data.errors;

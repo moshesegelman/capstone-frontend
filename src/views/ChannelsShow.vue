@@ -59,7 +59,7 @@ export default {
       received: (data) => {
         // Called when there's incoming data on the websocket for this channel
         console.log("Data from MessagesChannel:", data);
-        this.messages.unshift(data); // update the messages in real time
+        this.messages.push(data); // update the messages in real time
       },
     });
   },
