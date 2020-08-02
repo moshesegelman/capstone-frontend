@@ -12,6 +12,7 @@ import UsersShow from "../views/UsersShow.vue";
 import UsersEdit from "../views/UsersEdit.vue";
 import ConversationsIndex from "../views/ConversationsIndex.vue";
 import ConversationsShow from "../views/ConversationsShow.vue";
+import FriendsIndex from "../views/FriendsIndex.vue";
 
 Vue.use(VueRouter);
 
@@ -28,6 +29,7 @@ const routes = [
   { path: "/users/:id/edit", name: "users-edit", component: UsersEdit },
   { path: "/conversations", name: "conversation-index", component: ConversationsIndex },
   { path: "/conversations/:id", name: "conversation-show", component: ConversationsShow },
+  { path: "/friends", name: "friends-index", component: FriendsIndex },
 ];
 
 // {

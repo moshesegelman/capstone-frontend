@@ -9,7 +9,8 @@
           <router-link to="/logout">Logout</router-link> |
           <router-link to="/subjects">Subject Index</router-link> |
           <router-link :to="`/users/${userId}`">users show</router-link> |
-          <router-link to="/conversations">Conversations</router-link> 
+          <router-link to="/conversations">Conversations</router-link> |
+          <router-link to="/friends">Friends</router-link> 
        </div>
     </div>
     <div class="container">

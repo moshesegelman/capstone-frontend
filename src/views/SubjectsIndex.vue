@@ -9,7 +9,6 @@
     <datalist id="titles">
       <option v-for="subject in subjects">{{subject.name }}</option>
     </datalist>
-    <h1>{{ message }}</h1>
     <div v-for="subject in orderBy(filterBy(subjects, nameFilter), sortAttribute)" v-bind:key="subject.id">
       <h1>Subejct: {{ subject.name }}</h1>
       <img :src="subject.image_url" > <br>
@@ -32,7 +31,6 @@ export default {
   mixins: [Vue2Filters.mixin],
   data: function () {
     return {
-      message: "Welcome to Subject Index",
       subjects: [],
       errors: [],
       nameFilter: "",

@@ -63,21 +63,21 @@ export default {
         console.log(error.response.data.errors);
         this.errors = error.response.data.errors;
       });
-    var cable = ActionCable.createConsumer("ws://localhost:3000/cable");
-    cable.subscriptions.create("ChannelsChannel", {
-      connected: () => {
-        // Called when the subscription is ready for use on the server
-        console.log("Connected to ChannelsChannel");
-      },
-      disconnected: () => {
-        // Called when the subscription has been terminated by the server
-      },
-      received: (data) => {
-        // Called when there's incoming data on the websocket for this channel
-        console.log("Data from ChannelsChannel:", data);
-        this.channels.push(data); // update the messages in real time
-      },
-    });
+    // var cable = ActionCable.createConsumer("ws://localhost:3000/cable");
+    // cable.subscriptions.create("ChannelsChannel", {
+    //   connected: () => {
+    //     // Called when the subscription is ready for use on the server
+    //     console.log("Connected to ChannelsChannel");
+    //   },
+    //   disconnected: () => {
+    //     // Called when the subscription has been terminated by the server
+    //   },
+    //   received: (data) => {
+    //     // Called when there's incoming data on the websocket for this channel
+    //     console.log("Data from ChannelsChannel:", data);
+    //     this.channels.push(data); // update the messages in real time
+    //   },
+    // });
   },
   methods: {
     createChannel: function () {
