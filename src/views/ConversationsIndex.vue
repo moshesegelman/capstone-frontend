@@ -1,24 +1,50 @@
 <template>
-  <div class="conversation-index">
+  <section>
+    <div id="container">
+      <!-- start clients section -->
+      <section>
+        <div class="container">
+          <div class="stm_partners section-clients3">
+            <div class="client-single" v-for="conversation in conversations">
+              <div class="client-img">
+                <img width="180" src="img/partners/client-01.png" alt="" />
+              </div>
+              <div class="client-desc">
+                <div class="inner-title half">
+                  <h5 class="client-title">
+                    {{ conversation.partner.username }}
+                  </h5>
+                </div>
+                <p>
+                  {{ conversation.last_message.text }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- end clients section -->
+    </div>
+  </section>
+  <!-- <div class="conversation-index">
     <div v-for="conversation in conversations">
       <h1>{{ conversation.partner.username }}: {{conversation.last_message.text}}  <router-link :to="`/conversations/${conversation.id}`">Click</router-link> <button class="btn btn-primary" v-on:click="destroyConversation(conversation)">Delete Conversation</button></h1>
     </div>
-  </div>
+  </div> -->
 </template>
 
-<style>
-</style>
+<style></style>
 
 <script>
 import axios from "axios";
 import ActionCable from "actioncable";
 export default {
-  data: function () {
+  data: function() {
     return {
       conversations: [],
     };
   },
-  created: function () {
+  created: function() {
     axios.get("api/conversations").then((response) => {
       console.log(response.data);
       this.conversations = response.data;
@@ -41,7 +67,7 @@ export default {
     // });
   },
   methods: {
-    destroyConversation: function (conversation) {
+    destroyConversation: function(conversation) {
       if (confirm("Are you sure you want to delete this conversation?")) {
         axios
           .delete(`/api/conversations/${conversation.id}`)
