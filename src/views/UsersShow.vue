@@ -138,13 +138,13 @@
     <section
       class="page-title-section2 bg-img cover-background"
       data-overlay-dark="7"
-      data-background="img/slider/elements/header_penpot.png"
-      style='background-image: url("img/slider/elements/header_penpot.png");'
+      data-background="/img/slider/elements/header_flowerpot.png"
+      style='background-image: url("/img/slider/elements/header_flowerpot.png");'
     >
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <h1>Welcome {{ user.username }}!</h1>
+            <h1>Welcome {{ user.first_name }} {{ user.last_name }}!</h1>
             <br />
             <button
               type="button"
@@ -163,7 +163,7 @@
       <div id="container">
         <div class="container">
           <div class="section-heading">
-            <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+            <h3>{{ user.username }}s Channels</h3>
           </div>
           <div class="row">
             <div

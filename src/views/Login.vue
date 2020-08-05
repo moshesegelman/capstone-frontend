@@ -3,12 +3,13 @@
     <section
       class="page-title-section2 bg-img cover-background"
       data-overlay-dark="7"
-      data-background="img/slider/elements/header_penpot.png"
-      style='background-image: url("img/slider/elements/header_penpot.png");'>
+      data-background="/img/slider/elements/header_penpot.png"
+      style='background-image: url("/img/slider/elements/header_penpot.png");'
+    >
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <h1>Login</h1>
+            <h1>Login to get started!</h1>
           </div>
         </div>
       </div>

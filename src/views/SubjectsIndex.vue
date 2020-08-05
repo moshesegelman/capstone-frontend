@@ -3,8 +3,8 @@
     <section
       class="page-title-section2 bg-img cover-background"
       data-overlay-dark="7"
-      data-background="img/slider/elements/header_penpot.png"
-      style='background-image: url("img/slider/elements/header_penpot.png");'
+      data-background="/img/slider/elements/header_penpot.png"
+      style='background-image: url("/img/slider/elements/header_penpot.png");'
     >
       <div class="container">
         <div class="row">
@@ -42,17 +42,16 @@
                         </script>
                         2020 -->
                 </div>
-                <h3>
-                  <a href="blog-post.html">{{ subject.name }}</a>
-                </h3>
+                <h1>
+                  {{ subject.name }}
+                </h1>
                 <p>
-                  Exercitation ullamco laboris nisi ut aliquip ex ea commodo.
+                  {{ subject.channels }}
                 </p>
                 <span class="read-more"
                   ><router-link :to="`/subjects/${subject.id}`"
-                    >Channels</router-link
-                  ></span
-                >
+                    >Channels <i class="fas fa-arrow-right"></i></router-link
+                ></span>
               </div>
             </article>
           </div>

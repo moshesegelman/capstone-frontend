@@ -3,8 +3,8 @@
     <section
       class="page-title-section2 bg-img cover-background"
       data-overlay-dark="7"
-      data-background="img/slider/elements/header_penpot.png"
-      style='background-image: url("img/slider/elements/header_penpot.png");'
+      data-background="/img/slider/elements/header_pen.png"
+      style='background-image: url("/img/slider/elements/header_pen.png");'
     >
       <div class="container">
         <div class="row">
@@ -35,7 +35,9 @@
                 </div>
                 <p>
                   <router-link :to="`/conversations/${conversation.id}`"
-                    >{{ conversation.last_message.text }} |
+                    ><div v-if="textExists(conversation)">
+                      {{ conversation.last_message.text }}
+                    </div>
                     <button
                       class="butn small"
                       v-on:click="destroyConversation(conversation)"
@@ -100,6 +102,9 @@ export default {
             this.errors = error.response.data.errors;
           });
       }
+    },
+    textExists: function(conversation) {
+      return conversation.last_message;
     },
   },
 };

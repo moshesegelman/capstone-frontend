@@ -3,8 +3,8 @@
     <section
       class="page-title-section2 bg-img cover-background"
       data-overlay-dark="7"
-      data-background="img/slider/elements/header_penpot.png"
-      style='background-image: url("img/slider/elements/header_penpot.png");'
+      data-background="/img/slider/elements/header_pen.png"
+      style='background-image: url("/img/slider/elements/header_pen.png");'
     >
       <div class="container">
         <div class="row">

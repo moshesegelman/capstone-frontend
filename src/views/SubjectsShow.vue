@@ -3,13 +3,13 @@
     <section
       class="page-title-section2 bg-img cover-background"
       data-overlay-dark="7"
-      data-background="img/slider/elements/header_penpot.png"
-      style='background-image: url("img/slider/elements/header_penpot.png");'
+      data-background="/img/slider/elements/header_papers.png"
+      style='background-image: url("/img/slider/elements/header_papers.png");'
     >
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <h1>Dont See a Channel that Meets Your Needs?</h1>
+            <h1>Dont See a Channel that Meets Your Needs?<br />Create One!</h1>
           </div>
         </div>
       </div>

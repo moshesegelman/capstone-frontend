@@ -3,8 +3,8 @@
     <section
       class="page-title-section2 bg-img cover-background"
       data-overlay-dark="7"
-      data-background="img/slider/elements/header_penpot.png"
-      style='background-image: url("img/slider/elements/header_penpot.png");'
+      data-background="/img/slider/elements/header_penpot.png"
+      style='background-image: url("/img/slider/elements/header_penpot.png");'
     >
       <div class="container">
         <div class="row">
@@ -27,7 +27,7 @@
             <div v-for="friend in friends">
               <h3>{{ friend.user.username }}</h3>
               <button class="butn" v-on:click="createConversation(friend)">
-                Message
+                <i class="fas fa-paper-plane"></i>
               </button>
               |
               <button class="butn" v-on:click="deleteFriend(friend)">
