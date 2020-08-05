@@ -1,100 +1,95 @@
 <template>
-  <section class="blogs">
-    <div class="container">
-      <div class="row">
-        <!--  start blog left-->
-        <div class="posts">
-          <!--  start post-->
-
-          <!--  start comment-->
-          <div class="comments-area">
-            <div class="line-title">
-              <h3>{{ conversation.partner.username }}</h3>
-            </div>
-            <div v-for="message in messages">
-              <div class="comment-box">
-                <div class="author-thumb"></div>
-                <div class="comment-info">
-                  <h6>
-                    <a>{{ message.creator }}</a>
-                  </h6>
-                  <p>
-                    {{ message.text }}
-                  </p>
-                  <div v-if="!isMessageUser(message)">
-                    <div class="reply">
-                      <a href="#!" v-on:click="createConversation(message)">
-                        <i class="fa fa-reply" aria-hidden="true"></i>
-                        Message
-                      </a>
-                      |
-                      <a href="" v-on:click="createFriend(message)">
-                        <i class="fa fa-reply" aria-hidden="true"></i>
-                        Send Friend Request
-                      </a>
-                    </div>
-                  </div>
-                  <div v-if="isMessageUser(message)">
-                    <div class="reply">
-                      <a href="#!" v-on:click="destroyMessage(message)">
-                        <i class="fa fa-reply" aria-hidden="true"></i>
-                        Delete Message
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+  <div class="conversations-show">
+    <section
+      class="page-title-section2 bg-img cover-background"
+      data-overlay-dark="7"
+      data-background="img/slider/elements/header_penpot.png"
+      style='background-image: url("img/slider/elements/header_penpot.png");'
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Which Subject Are You Looking to Study?</h1>
           </div>
-          <!-- end comment-->
-
-          <!--  start form-->
-          <div class="comment-form">
-            <div class="line-title">
-              <h3>Message</h3>
-            </div>
-
-            <form method="post">
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="form-group">
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows="1"
-                      v-model="text"
-                      placeholder="Tell us a few words"
-                    ></textarea>
-                  </div>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                class="butn theme"
-                v-on:click="createMessage()"
-              >
-                <span>Send Message</span>
-              </button>
-            </form>
-          </div>
-          <!--  end form-->
         </div>
-        <!--  end blog left-->
       </div>
-    </div>
-  </section>
-  <!-- <div class="conversations-show">
-    <h1>{{ partner.username }}</h1>
-    <div v-for="message in messages">
-      <h3>{{message.creator}}: {{message.text}}</h3>
-        <div v-if="isMessageUser(message)">
-          <button class="btn btn-primary" v-on:click="destroyMessage(message)">Delete</button>
-        </div>  
-    </div>
-    Message: <input type="text" v-model="text"> 
-    <button v-on:click="createMessage()">Send</button>
-  </div> -->
+    </section>
+    <section class="blogs">
+      <div class="container">
+        <div class="row">
+          <!--  start blog left-->
+          <div class="posts">
+            <!--  start post-->
+
+            <div class="line-title">
+              <h3>{{ partner.username }}</h3>
+            </div>
+
+            <!--  start comment-->
+            <div class="comments-area  padding-20px-top">
+              <div v-for="message in messages">
+                <div class="comment-box">
+                  <div class="author-thumb"></div>
+                  <div class="comment-info">
+                    <h6>
+                      <a>{{ message.creator }}</a>
+                    </h6>
+                    <p>
+                      {{ message.text }}
+                    </p>
+                    <div v-if="isMessageUser(message)">
+                      <div class="reply">
+                        <a href="#!" v-on:click="destroyMessage(message)">
+                          Delete Message
+                          <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end comment-->
+
+            <!--  start form-->
+            <div
+              class="comment-form border border-dark margin-15px-top padding-30px-top padding-30px-left padding-30px-right padding-30px-bottom"
+            >
+              <div class="line-title">
+                <h3>Message</h3>
+              </div>
+
+              <form method="post">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <textarea
+                        id="message"
+                        name="message"
+                        rows="1"
+                        v-model="text"
+                        placeholder="Tell us a few words"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  class="butn theme"
+                  v-on:click="createMessage()"
+                >
+                  <span>Send Message</span>
+                </button>
+              </form>
+            </div>
+            <!--  end form-->
+          </div>
+          <!--  end blog left-->
+        </div>
+      </div>
+    </section>
+  </div>
 </template>
 
 <style></style>

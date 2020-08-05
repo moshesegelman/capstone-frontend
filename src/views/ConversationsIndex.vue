@@ -1,36 +1,56 @@
 <template>
-  <section>
-    <div id="container">
-      <!-- start clients section -->
-      <section>
+  <div class="conversation-index">
+    <section
+      class="page-title-section2 bg-img cover-background"
+      data-overlay-dark="7"
+      data-background="img/slider/elements/header_penpot.png"
+      style='background-image: url("img/slider/elements/header_penpot.png");'
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Which Subject Are You Looking to Study?</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div id="container">
+        <!-- start clients section -->
+        <div class="section-heading">
+          <h3>Conversations</h3>
+        </div>
         <div class="container">
           <div class="stm_partners section-clients3">
             <div class="client-single" v-for="conversation in conversations">
-              <div class="client-img">
-                <img width="180" src="img/partners/client-01.png" alt="" />
-              </div>
-              <div class="client-desc">
+              <div
+                class="client-desc border border-dark padding-15px-top padding-30px-left padding-15px-bottom"
+              >
                 <div class="inner-title half">
-                  <h5 class="client-title">
-                    {{ conversation.partner.username }}
-                  </h5>
+                  <h2 class="client-title">
+                    <router-link :to="`/conversations/${conversation.id}`">{{
+                      conversation.partner.username
+                    }}</router-link>
+                  </h2>
                 </div>
                 <p>
-                  {{ conversation.last_message.text }}
+                  <router-link :to="`/conversations/${conversation.id}`"
+                    >{{ conversation.last_message.text }} |
+                    <button
+                      class="butn small"
+                      v-on:click="destroyConversation(conversation)"
+                    >
+                      <i class="fa fa-trash" aria-hidden="true"></i></button
+                  ></router-link>
                 </p>
               </div>
             </div>
           </div>
         </div>
-      </section>
-      <!-- end clients section -->
-    </div>
-  </section>
-  <!-- <div class="conversation-index">
-    <div v-for="conversation in conversations">
-      <h1>{{ conversation.partner.username }}: {{conversation.last_message.text}}  <router-link :to="`/conversations/${conversation.id}`">Click</router-link> <button class="btn btn-primary" v-on:click="destroyConversation(conversation)">Delete Conversation</button></h1>
-    </div>
-  </div> -->
+        <!-- end clients section -->
+      </div>
+    </section>
+  </div>
 </template>
 
 <style></style>
@@ -73,8 +93,7 @@ export default {
           .delete(`/api/conversations/${conversation.id}`)
           .then((response) => {
             console.log("Successfully destroyed", response.data);
-            var index = this.conversations.indexOf(conversation);
-            this.conversations.splice(index, 1);
+            this.$router.push("/conversations");
           })
           .catch((error) => {
             console.log(error.response.data.errors);

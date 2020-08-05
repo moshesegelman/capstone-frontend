@@ -1,114 +1,117 @@
 <template>
-  <section class="blogs">
-    <div class="container">
-      <div class="row">
-        <!--  start blog left-->
-        <div class="posts">
-          <!--  start post-->
-
-          <!--  start comment-->
-          <div class="comments-area">
-            <div class="line-title">
-              <h3>Messages</h3>
-            </div>
-            <div v-for="message in messages">
-              <div class="comment-box">
-                <div class="author-thumb"></div>
-                <div class="comment-info">
-                  <h6>
-                    <a>{{ message.creator }}</a>
-                  </h6>
-                  <p>
-                    {{ message.text }}
-                  </p>
-                  <div v-if="!isMessageUser(message)">
-                    <div class="reply">
-                      <a href="#!" v-on:click="createConversation(message)">
-                        <i class="fa fa-reply" aria-hidden="true"></i>
-                        Message
-                      </a>
-                      |
-                      <a href="#!" v-on:click="createFriend(message)">
-                        <i class="fa fa-reply" aria-hidden="true"></i>
-                        Send Friend Request
-                      </a>
-                    </div>
-                  </div>
-                  <div v-if="isMessageUser(message)">
-                    <div class="reply">
-                      <a href="#!" v-on:click="destroyMessage(message)">
-                        <i class="fa fa-reply" aria-hidden="true"></i>
-                        Delete Message
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+  <div class="channel-show">
+    <section
+      class="page-title-section2 bg-img cover-background"
+      data-overlay-dark="7"
+      data-background="img/slider/elements/header_penpot.png"
+      style='background-image: url("img/slider/elements/header_penpot.png");'
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Name: {{ channel.name }}</h1>
+            <h1>Details: {{ channel.details }}</h1>
           </div>
-          <!-- end comment-->
-
-          <!--  start form-->
-          <div class="comment-form">
-            <div class="line-title">
-              <h3>Message</h3>
-            </div>
-
-            <form method="post">
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="form-group">
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows="3"
-                      v-model="text"
-                      placeholder="Tell us a few words"
-                    ></textarea>
-                  </div>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                class="butn theme"
-                v-on:click="createMessage()"
-              >
-                <span>Send Message</span>
-              </button>
-            </form>
-          </div>
-          <!--  end form-->
         </div>
-        <!--  end blog left-->
       </div>
-    </div>
-  </section>
-  <!-- <div class="channel-show">
-    <ul>
-      <li v-for="error in errors">{{ error }}</li>
-    </ul>
-    <h1>Channel: {{ channel.name }}</h1>
-    <h2> Creator: {{ channel.creator }}</h2>
-    Messages
-    <div v-for="message in messages">
-      <div v-if="!isMessageUser(message)">
-          <button class="btn btn-primary" v-on:click="createConversation(message)">Message</button>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="blogs">
+          <div class="row">
+            <!--  start blog left-->
+            <div class="posts">
+              <!--  start post-->
+
+              <div class="line-title">
+                <h3>Messages | Channel Owner: {{ channel.creator }}</h3>
+              </div>
+
+              <!--  start comment-->
+              <div
+                class="comments-area  padding-20px-top padding-30px-right padding-10px-left"
+              >
+                <div v-for="message in messages">
+                  <div class="comment-box ">
+                    <div class="author-thumb"></div>
+                    <div class="comment-info">
+                      <h6>
+                        <a>{{ message.creator }}</a>
+                      </h6>
+                      <p>
+                        {{ message.text }}
+                      </p>
+                      <div v-if="!isMessageUser(message)">
+                        <div class="reply">
+                          <a href="#!" v-on:click="createConversation(message)">
+                            Message
+                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                          </a>
+                          |
+                          <a href="#!" v-on:click="createFriend(message)">
+                            Send Friend Request
+                            <i
+                              class="fa fa-user-friends"
+                              aria-hidden="true"
+                            ></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div v-if="isMessageUser(message)">
+                        <div class="reply">
+                          <a href="#!" v-on:click="destroyMessage(message)">
+                            Delete Message
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end comment-->
+
+              <!--  start form-->
+              <div
+                class="comment-form border border-dark margin-15px-top padding-30px-top padding-30px-left padding-30px-right padding-30px-bottom"
+              >
+                <div class="line-title">
+                  <h3>Send Message</h3>
+                </div>
+
+                <form method="post">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="form-group">
+                        <textarea
+                          id="message"
+                          name="message"
+                          rows="1"
+                          v-model="text"
+                          placeholder="Tell us a few words"
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    class="butn theme"
+                    v-on:click="createMessage()"
+                  >
+                    <span>Send</span>
+                  </button>
+                </form>
+              </div>
+              <!--  end form-->
+            </div>
+            <!--  end blog left-->
+          </div>
+        </div>
       </div>
-      <div v-if="!isMessageUser(message)">
-        <button class="btn btn-primary" v-on:click="createFriend(message)">Friend Request</button>
-      </div>
-      <h3>{{ message.creator}}: {{ message.text }} 
-      <div v-if="isMessageUser(message)">
-        <button class="btn btn-primary" v-on:click="destroyMessage(message)">Delete</button>
-      </div>  
-     </h3>
-    </div>
-    <div v-if="$parent.isLoggedIn()">
-      Message: <input type="text" v-model="text"> 
-      <button v-on:click="createMessage()">Send</button>
-    </div>
-  </div> -->
+    </section>
+  </div>
 </template>
 
 <style></style>
@@ -120,17 +123,18 @@ export default {
   data: function() {
     return {
       errors: [],
+      ownerId: 0,
       conversations: [],
       channel: {},
       messages: [],
       text: "",
-      subjectId: localStorage.getItem("subjectId"),
     };
   },
   created: function() {
     axios.get(`/api/channels/${this.$route.params.id}`).then((response) => {
       console.log("channels show");
       this.channel = response.data;
+      console.log(this.channel);
       this.messages = this.channel.messages;
       console.log(response.data);
       console.log(this.messages);

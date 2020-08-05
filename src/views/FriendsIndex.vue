@@ -1,30 +1,73 @@
 <template>
   <div class="friends-index">
-    <h1>Friends</h1>
-    <div v-for="friend in friends">
-      <h3>{{ friend.user.username }}</h3>
-       <button  v-on:click="createConversation(friend)">Message</button>
-       <button  v-on:click="deleteFriend(friend)">unfriend</button>
-    </div>
-    <h1>Friend Requests</h1>
-    <div v-for="friend in pendingFriends">
-        <h3>{{ friend.user.username}}</h3>
-      <div v-if="!isRequestUser(friend)">
-        <button v-on:click="friendsUpdate(friend)">Accept</button>
-        <button v-on:click="deleteFriend(friend)">Decline</button>
+    <section
+      class="page-title-section2 bg-img cover-background"
+      data-overlay-dark="7"
+      data-background="img/slider/elements/header_penpot.png"
+      style='background-image: url("img/slider/elements/header_penpot.png");'
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Which Subject Are You Looking to Study?</h1>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
+    <section>
+      <div id="container">
+        <div class="section-heading">
+          <h3>Buddies</h3>
+        </div>
+        <div class="row">
+          <div
+            class="col-md-6   margin-15px-bottom padding-10px-tb text-center"
+          >
+            <h1>Friends</h1>
+            <div v-for="friend in friends">
+              <h3>{{ friend.user.username }}</h3>
+              <button class="butn" v-on:click="createConversation(friend)">
+                Message
+              </button>
+              |
+              <button class="butn" v-on:click="deleteFriend(friend)">
+                unfriend
+              </button>
+            </div>
+          </div>
+          <div class="col-md-6  margin-15px-bottom padding-10px-tb text-center">
+            <h1>Friend Requests</h1>
+            <div v-for="friend in pendingFriends">
+              <h3>{{ friend.user.username }}</h3>
+              <div v-if="!isRequestUser(friend)">
+                <button class="butn theme" v-on:click="friendsUpdate(friend)">
+                  <i class="fas fa-check"></i>
+                </button>
+                |
+                <button class="butn theme" v-on:click="deleteFriend(friend)">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              <div v-if="isRequestUser(friend)">
+                <button class="butn theme" v-on:click="deleteFriend(friend)">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
-<style>
-</style>
+<style></style>
 
 <script>
 import axios from "axios";
 import ActionCable from "actioncable";
 export default {
-  data: function () {
+  data: function() {
     return {
       all_friends: [],
       friends: [],
@@ -32,7 +75,7 @@ export default {
       senderId: 0,
     };
   },
-  created: function () {
+  created: function() {
     axios.get("/api/friends").then((response) => {
       this.all_friends = response.data;
       console.log(this.all_friends);
@@ -61,17 +104,17 @@ export default {
     // });
   },
   methods: {
-    friendsUpdate: function (friend) {
+    friendsUpdate: function(friend) {
       console.log(friend.user.id);
       axios.patch(`/api/friends/${friend.id}`).then((response) => {
         console.log(response.data);
       });
     },
-    isRequestUser: function (friend) {
+    isRequestUser: function(friend) {
       // eslint-disable-next-line eqeqeq
       return localStorage.getItem("userId") == friend.sender_id;
     },
-    createConversation: function (friend) {
+    createConversation: function(friend) {
       var conversationData = {
         recipient_id: friend.user.id,
       };
@@ -85,7 +128,7 @@ export default {
           this.errors = error.response.data.errors;
         });
     },
-    deleteFriend: function (friend) {
+    deleteFriend: function(friend) {
       if (confirm("Are you sure you want to decline this friend request?")) {
         axios
           .delete(`/api/friends/${friend.id}`)
